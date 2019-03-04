@@ -1,5 +1,5 @@
 (() => {
-	console.log('fired! ready to jam');
+	//console.log('fired! ready to jam');
 
 	function playDrumKitSound(event) {
 		//debugger;
@@ -14,7 +14,30 @@
 		//rewind audio on every click
 		audio.currentTime = 0;
 		audio.play();
+
+		//grb the div and animate it
+		let key = document.querySelector(`div[data-key="${event.keyCode}"]`);
+		key.classList.add("playing");
 	}
+
+	function removePlayingClass(event) {
+		//debugger;
+		
+		if (event.propertyName !== "transform") {
+			return;
+		}
+		else {
+			// rmove the playing class here fro the active div
+			//console.log('transition is done', (${event.propertyName}));
+			//this.classList.remove("playing");
+			event.target.classList.remove('playing');
+		}
+		
+	}
+
+	const keys = Array.from(document.querySelectorAll('.key'));
+
+	keys.forEach(key => key.addEventListener("transitionend", removePlayingClass));
 
 	window.addEventListener("keydown", playDrumKitSound);
 
